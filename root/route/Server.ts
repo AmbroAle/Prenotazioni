@@ -4,13 +4,21 @@ import appointmentRoutes from './router';
 export default class Server {
     private app: Application;
     private port: number;
+    private static instance: Server;
 
-    constructor(port: number) {
+    private constructor(port: number) {
         this.app = express();
         this.port = port;
 
         this.setupMiddlewares();
         this.setupRoutes();
+    }
+
+    public static getInstance(): Server {
+        if (!Server.instance) {
+            Server.instance = new Server(3000);
+        }
+        return Server.instance;
     }
 
     private setupMiddlewares(): void {

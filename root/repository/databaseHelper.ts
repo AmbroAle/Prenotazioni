@@ -1,5 +1,4 @@
 import mysql, { Pool, PoolConnection } from 'mysql2/promise';
-import { string } from 'zod';
 
 export default class DatabaseHelper {
     private static instance: DatabaseHelper;
