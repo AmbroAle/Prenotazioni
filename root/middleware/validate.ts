@@ -1,25 +1,49 @@
-import { z } from "zod";
+import { Request, Response, NextFunction } from "express";
+import {scheme} from "./scheme"
 
-export const schemeUpdate = z.object({
-    data: z.string().date("formato data non valido"),
-    idTipo: z.number().int().positive(),
-    orario: z.string().time("formato orario non valido"),
-    newData: z.string().date("formato data non valido"),
-});
+export type typeUpdate = {
+    data: string;
+    idTipo: number;
+    orario: string;
+    newData: string;
+};
 
-export const schemeGet = z.object({
-    email: z.string().optional(),
-});
+export type typeDelete = {
+    data: string;
+    idTipo: number;
+    orario: string;
+};
 
-export const schemeDelete = z.object({
-    idTipo: z.number().int().positive(),
-    orario: z.string().time("formato orario non valido"),
-    data: z.string().date("formato data non valido"),
-});
+export type typeCreate = {
+    data: string;
+    idTipo: number;
+    orario: string;
+    email: string;
+};
 
-export const schemeCreate = z.object({
-    data: z.string().date("formato data non valido"),
-    idTipo: z.number().int().positive(),
-    orario: z.string().time("formato orario non valido"),
-    email: z.string().email("Formato email non valido"),
-});
+export const validator = {
+    getAppointments : (req : Request<{},{},{},{email:string}>, res : Response, next : NextFunction) : void => {
+        
+            const validate : {email: string}  = scheme.schemeGet.parse(req.query);
+            req.query = validate ;
+            next();
+    },
+
+    updateAppointments : (req : Request<{},{},{},typeUpdate>, res : Response, next : NextFunction) : void => {
+        const validate : typeUpdate = scheme.schemeUpdate.parse(req.body);
+        req.body = validate;
+        next();
+    },
+
+    deleteAppointments : (req : Request<{},{},{},typeDelete>, res : Response, next : NextFunction) : void => {
+        const validate : typeDelete = scheme.schemeDelete.parse(req.body);
+        req.body = validate;
+        next();
+    },
+
+    createAppointments : (req : Request<{},{},{},typeCreate>, res : Response, next : NextFunction) : void => {
+        const validate : typeCreate = scheme.schemeCreate.parse(req.body);
+        req.body = validate;
+        next();
+    }
+};

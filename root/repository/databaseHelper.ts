@@ -1,4 +1,4 @@
-import mysql, { Pool, PoolConnection } from 'mysql2/promise';
+import mysql, { OkPacket, OkPacketParams, Pool, PoolConnection, PreparedStatementInfo, PrepareStatementInfo, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 
 export default class DatabaseHelper {
     private static instance: DatabaseHelper;
@@ -24,28 +24,28 @@ export default class DatabaseHelper {
     }
 
     public async getAppointments(email: string) {
-        const conn = await this.pool.getConnection();
-        const sql = 'SELECT * FROM `Prenotazione` WHERE MATCH (Utente_Email) AGAINST (? IN NATURAL LANGUAGE MODE)';
-        const statement = await conn.prepare(sql);
-        const [rows, fields] = await statement.execute([email]);
+        const conn : PoolConnection = await this.pool.getConnection();
+        const sql : string = 'SELECT * FROM `Prenotazione` WHERE MATCH (Utente_Email) AGAINST (? IN NATURAL LANGUAGE MODE) LIMIT 1 OFFSET 0';
+        const statement : PreparedStatementInfo  = await conn.prepare(sql);
+        const [result] = await statement.execute([email]);
         conn.release();
-        return rows;
+        return result;
         
     }
 
     public async createAppointments(data: string, idTipo: number, orario: string, email: string) {
-        const conn = await this.pool.getConnection();
-        const sql = 'INSERT INTO `Prenotazione` (`Data`,`Tipo_idTipo`,`Fascia_Oraria_Da`, `Utente_Email`) VALUES (?, ?, ?, ?)';
-        const statement = await conn.prepare(sql);
+        const conn : PoolConnection = await this.pool.getConnection();
+        const sql : string = 'INSERT INTO `Prenotazione` (`Data`,`Tipo_idTipo`,`Fascia_Oraria_Da`, `Utente_Email`) VALUES (?, ?, ?, ?)';
+        const statement : PreparedStatementInfo = await conn.prepare(sql);
         const result = await statement.execute([data, idTipo,orario,email]);
         conn.release();
         return result;
     }
 
     public async deleteAppointment(idTipo: number, orario: string, data: string) {
-        const conn = await this.pool.getConnection();
-        const sql = 'DELETE FROM `Prenotazione` WHERE `Tipo_idTipo` = ? and `Fascia_Oraria_Da` = ? and `Data` = ?';
-        const statement = await conn.prepare(sql);
+        const conn : PoolConnection = await this.pool.getConnection();
+        const sql : string = 'DELETE FROM `Prenotazione` WHERE `Tipo_idTipo` = ? and `Fascia_Oraria_Da` = ? and `Data` = ?';
+        const statement : PreparedStatementInfo = await conn.prepare(sql);
         const result = await statement.execute([idTipo,orario,data]);
         conn.release();
         return result;
@@ -53,9 +53,9 @@ export default class DatabaseHelper {
     }
 
     public async modifyAppointment(idTipo: number, orario: string, data: string, newData: string) {
-        const conn = await this.pool.getConnection();
-        const sql = 'UPDATE `Prenotazione` SET `Data` = ? WHERE `Tipo_idTipo` = ? and `Fascia_Oraria_Da` = ? and `Data` = ?';
-        const statement = await conn.prepare(sql);
+        const conn : PoolConnection = await this.pool.getConnection();
+        const sql : string = 'UPDATE `Prenotazione` SET `Data` = ? WHERE `Tipo_idTipo` = ? and `Fascia_Oraria_Da` = ? and `Data` = ?';
+        const statement : PreparedStatementInfo = await conn.prepare(sql);
         const result = await statement.execute([newData, idTipo, orario, data]);
         conn.release();
         return result;
