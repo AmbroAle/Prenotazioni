@@ -10,6 +10,7 @@ export const scheme = {
 
     schemeGet: z.object({
         email: z.string(),
+        page: z.string(),
     }),
 
     schemeDelete: z.object({

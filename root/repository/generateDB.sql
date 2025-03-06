@@ -52,12 +52,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Prenotazioni`.`Prenotazione`
 -- -----------------------------------------------------
+-- Creazione della tabella Prenotazione
 CREATE TABLE IF NOT EXISTS `Prenotazioni`.`Prenotazione` (
+  `Id_Prenotazione` INT AUTO_INCREMENT PRIMARY KEY,
   `Data` DATE NOT NULL,
   `Tipo_idTipo` INT NOT NULL,
   `Fascia_Oraria_Da` TIME NOT NULL,
   `Utente_Email` VARCHAR(80) NOT NULL,
-  PRIMARY KEY (`Tipo_idTipo`, `Fascia_Oraria_Da`, `Data`),
   INDEX `fk_Prenotazione_Tipo1_idx` (`Tipo_idTipo` ASC),
   INDEX `fk_Prenotazione_FasciaOraria1_idx` (`Fascia_Oraria_Da` ASC),
   INDEX `fk_Prenotazione_Utente1_idx` (`Utente_Email` ASC),
@@ -76,8 +77,11 @@ CREATE TABLE IF NOT EXISTS `Prenotazioni`.`Prenotazione` (
     REFERENCES `Prenotazioni`.`Utente` (`Email`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
-  FULLTEXT (Utente_Email)
 ) ENGINE = InnoDB;
+
+-- Creazione dell'indice FULLTEXT separatamente
+ALTER TABLE `Prenotazioni`.`Prenotazione`
+ADD FULLTEXT INDEX `ft_Utente_Email` (`Utente_Email`);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

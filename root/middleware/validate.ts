@@ -22,11 +22,11 @@ export type typeCreate = {
 };
 
 export const validator = {
-    getAppointments : (req : Request<{},{},{},{email:string}>, res : Response, next : NextFunction) : void => {
+    getAppointments : (req : Request<{},{},{},{email:string, page : string}>, res : Response, next : NextFunction) : void => {
         
-            const validate : {email: string}  = scheme.schemeGet.parse(req.query);
-            req.query = validate ;
-            next();
+        const validate : {email : string, page : string}  = scheme.schemeGet.parse(req.query);
+        req.query = validate ;
+        next();
     },
 
     updateAppointments : (req : Request<{},{},{},typeUpdate>, res : Response, next : NextFunction) : void => {
