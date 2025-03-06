@@ -1,4 +1,4 @@
-import mysql, { Pool, PoolConnection, PreparedStatementInfo} from 'mysql2/promise';
+import mysql, { FieldPacket, Pool, PoolConnection, PreparedStatementInfo, ResultSetHeader, RowDataPacket} from 'mysql2/promise';
 
 export default class DatabaseHelper {
     private static instance: DatabaseHelper;
@@ -53,7 +53,7 @@ export default class DatabaseHelper {
         const conn : PoolConnection = await this.pool.getConnection();
         const sql : string = 'UPDATE `Prenotazione` SET `Data` = ? WHERE `Tipo_idTipo` = ? and `Fascia_Oraria_Da` = ? and `Data` = ?';
         const statement : PreparedStatementInfo = await conn.prepare(sql);
-        const result = await statement.execute([newData, idTipo, orario, data]);
+        const result  = await statement.execute([newData, idTipo, orario, data]);
         conn.release();
         return result;
     }

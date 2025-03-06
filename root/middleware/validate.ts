@@ -24,7 +24,7 @@ export type typeCreate = {
 export const validator = {
     getAppointments : (req : Request<{},{},{},{email:string, page : number}>, res : Response, next : NextFunction) : void => {
         
-        const validate = scheme.schemeGet.parse({
+        const validate : {email : string, page : number} = scheme.schemeGet.parse({
             email: req.query.email,
             page: Number(req.query.page),
         });
