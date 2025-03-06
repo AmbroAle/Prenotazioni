@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { validator, typeCreate, typeDelete, typeUpdate } from '../middleware/validate';
-import db from '../repository/databaseHelper';
 import { ResultSetHeader } from 'mysql2';
+import db from '../repository/appointments';
 
 const router = Router();
 const database = db.getInstance();
