@@ -10,7 +10,7 @@ export const scheme = {
 
     schemeGet: z.object({
         email: z.string(),
-        page: z.string(),
+        page: z.number().int().positive(),
     }),
 
     schemeDelete: z.object({

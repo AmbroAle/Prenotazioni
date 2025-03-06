@@ -6,7 +6,7 @@ import { ResultSetHeader } from 'mysql2';
 const router = Router();
 const database = db.getInstance();
 
-router.get('/appointments/get', validator.getAppointments, async (req: Request<{}, {}, {}, { email: string, page: string }>, res: Response) => {
+router.get('/appointments/get', validator.getAppointments, async (req: Request<{}, {}, {}, { email: string, page: number }>, res: Response) => {
     try{
         const email : string = req.query.email;
         const page : number = Number(req.query.page);

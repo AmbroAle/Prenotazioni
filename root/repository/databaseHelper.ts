@@ -22,7 +22,7 @@ export default class DatabaseHelper {
 
     public async getAppointments(email: string, page : number) {
         const conn : PoolConnection = await this.pool.getConnection();
-        const sql : string = 'SELECT * FROM `Prenotazione` WHERE MATCH (Utente_Email) AGAINST (? IN NATURAL LANGUAGE MODE) AND Id_Prenotazione < ? ORDER BY Id_Prenotazione DESC LIMIT 3';
+        const sql : string = 'SELECT * FROM `Prenotazione` WHERE MATCH (Utente_Email) AGAINST (? IN NATURAL LANGUAGE MODE) AND Id_Prenotazione < ? ORDER BY Id_Prenotazione DESC LIMIT 10';
         const statement : PreparedStatementInfo  = await conn.prepare(sql);
         const [result] = await statement.execute([email,page]);
         conn.release();
