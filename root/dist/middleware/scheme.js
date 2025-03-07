@@ -8,7 +8,7 @@ const allScheme = zod_1.z.object({
     orario: zod_1.z.string().time("formato orario non valido"),
     newData: zod_1.z.string().date("formato data non valido"),
     page: zod_1.z.number().int().positive(),
-    email: zod_1.z.string().email("Formato email non valido"),
+    email: zod_1.z.string(),
 });
 exports.scheme = {
     schemeUpdate: allScheme.omit({ page: true, email: true }),

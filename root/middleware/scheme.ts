@@ -14,7 +14,7 @@ const allScheme = z.object({
     orario: z.string().time("formato orario non valido"),
     newData: z.string().date("formato data non valido"),
     page: z.number().int().positive(),
-    email: z.string().email("Formato email non valido"),
+    email: z.string(),
 });
 
 export const scheme = {

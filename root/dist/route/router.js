@@ -17,46 +17,45 @@ const validate_1 = require("../middleware/validate");
 const appointments_1 = __importDefault(require("../repository/appointments"));
 const router = (0, express_1.Router)();
 const database = appointments_1.default.getInstance();
-router.get('/appointments/get', validate_1.validator.getAppointments, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/appointments/get', validate_1.validator.getAppointments, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const email = req.query.email;
         const page = Number(req.query.page);
         const result = yield database.getAppointments(email, page);
-        throw 'error';
         res.json(result);
     }
     catch (error) {
-        res.json(error);
+        next(error);
     }
 }));
-router.post('/appointments/update', validate_1.validator.updateAppointments, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/appointments/update', validate_1.validator.updateAppointments, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
         const result = yield database.modifyAppointment(data.idTipo, data.orario, data.data, data.newData);
         res.json(result);
     }
     catch (error) {
-        res.json(error);
+        next(error);
     }
 }));
-router.post('/appointments/create', validate_1.validator.createAppointments, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/appointments/create', validate_1.validator.createAppointments, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
         const result = yield database.createAppointments(data.data, data.idTipo, data.orario, data.email);
         res.json(result);
     }
     catch (error) {
-        res.json(error);
+        next(error);
     }
 }));
-router.post('/appointments/delete', validate_1.validator.deleteAppointments, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/appointments/delete', validate_1.validator.deleteAppointments, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
         const result = yield database.deleteAppointment(data.idTipo, data.orario, data.data);
         res.json(result);
     }
     catch (error) {
-        res.json(error);
+        next(error);
     }
 }));
 exports.default = router;
