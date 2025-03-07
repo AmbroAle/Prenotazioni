@@ -1,34 +1,15 @@
 import { Request, Response, NextFunction } from "express";
-import {scheme} from "./scheme"
+import {scheme, typeDelete, typeCreate, typeGet, typeUpdate} from "./scheme"
 
-export type typeUpdate = {
-    data: string;
-    idTipo: number;
-    orario: string;
-    newData: string;
-};
-
-export type typeDelete = {
-    data: string;
-    idTipo: number;
-    orario: string;
-};
-
-export type typeCreate = {
-    data: string;
-    idTipo: number;
-    orario: string;
-    email: string;
-};
 
 export const validator = {
-    getAppointments : (req : Request<{},{},{},{email:string, page : number}>, res : Response, next : NextFunction) : void => {
+    getAppointments : (req : Request<{},{},{},typeGet>, res : Response, next : NextFunction) : void => {
         
         const validate : {email : string, page : number} = scheme.schemeGet.parse({
             email: req.query.email,
             page: Number(req.query.page),
         });
-        req.query = validate ;
+        req.query = validate;
         next();
     },
 
@@ -50,3 +31,5 @@ export const validator = {
         next();
     }
 };
+
+export { typeCreate, typeDelete, typeUpdate, typeGet };

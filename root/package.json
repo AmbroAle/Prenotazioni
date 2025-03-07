@@ -2,7 +2,12 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "nodemon": "^3.1.9",
     "typescript": "^5.8.2"
+  },
+  "scripts": {
+    "build:w": "tsc -w",
+    "dev": "nodemon dist/entryPoint/index.js"
   },
   "dependencies": {
     "body-parser": "^1.20.3",

@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+export type typeUpdate = z.infer<typeof scheme.schemeUpdate>;
+
+export type typeDelete = z.infer<typeof scheme.schemeDelete>;
+
+export type typeCreate = z.infer<typeof scheme.schemeCreate>;
+
+export type typeGet = z.infer<typeof scheme.schemeGet>;
+
 export const scheme = {
     schemeUpdate: z.object({
         data: z.string().date("formato data non valido"),
@@ -26,3 +34,7 @@ export const scheme = {
         email: z.string().email("Formato email non valido"),
     })
 };
+
+export type Appointment = z.infer<typeof scheme.schemeCreate>
+
+type UpdateAppointment = Partial<Appointment>
