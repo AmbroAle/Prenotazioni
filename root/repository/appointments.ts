@@ -16,7 +16,7 @@ export default class AppointmentRepository {
     }
 
     public async getAppointments(email: string, page: number): Promise<RowDataPacket[]> {
-        const sql = 'SELECT * FROM `Prenotazione` WHERE MATCH (Utente_Email) AGAINST (? IN NATURAL LANGUAGE MODE) AND Id_Prenotazione < ? ORDER BY Id_Prenotazione DESC LIMIT 10';
+        const sql = 'SELECT * FROM `Prenotazione` WHERE MATCH (Utente_Email) AGAINST (? IN NATURAL LANGUAGE MODE) AND Id_Prenotazione >= ? ORDER BY Id_Prenotazione LIMIT 10';
         return db.fetchQuery(sql, [email, page]);
     }
 
