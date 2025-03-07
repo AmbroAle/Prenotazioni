@@ -22,6 +22,7 @@ router.get('/appointments/get', validate_1.validator.getAppointments, (req, res)
         const email = req.query.email;
         const page = Number(req.query.page);
         const result = yield database.getAppointments(email, page);
+        throw 'error';
         res.json(result);
     }
     catch (error) {

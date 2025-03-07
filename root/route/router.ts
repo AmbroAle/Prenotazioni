@@ -11,11 +11,12 @@ router.get('/appointments/get', validator.getAppointments, async (req: Request<{
         const email : string = req.query.email;
         const page : number = Number(req.query.page);
         const result : RowDataPacket[] = await database.getAppointments(email, page);
+        throw 'error';
          res.json(result)
     } catch(error){
          res.json(error);
     }
-})
+});
 
 router.post('/appointments/update', validator.updateAppointments, async (req : Request<{},{},typeUpdate,{}>, res : Response ) => {
     try {
