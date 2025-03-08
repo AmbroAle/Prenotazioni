@@ -5,10 +5,11 @@ export default class DatabaseHelper {
 
     private constructor() {
         this.pool = mysql.createPool({
-            host: 'localhost',  
-            user: 'root',       
-            password: '',       
-            database: 'Prenotazioni', 
+            host: 'mysql', 
+            user: 'root',         
+            password: 'pippo', 
+            database: 'Prenotazioni',
+            port: 3306,
         });
     }
 

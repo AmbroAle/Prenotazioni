@@ -7,7 +7,9 @@
   },
   "scripts": {
     "build:w": "tsc -w",
-    "dev": "nodemon dist/entryPoint/index.js"
+    "build": "tsc",
+    "dev": "nodemon dist/entryPoint/index.js",
+    "start": "node dist/entryPoint/index.js"
   },
   "dependencies": {
     "body-parser": "^1.20.3",

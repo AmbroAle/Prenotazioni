@@ -18,8 +18,9 @@ class DatabaseHelper {
         this.pool = promise_1.default.createPool({
             host: 'localhost',
             user: 'root',
-            password: '',
+            password: 'pippo',
             database: 'Prenotazioni',
+            port: 3306,
         });
     }
     static getInstance() {
